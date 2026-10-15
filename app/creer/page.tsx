@@ -1,23 +1,35 @@
 
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Creer() {
+  const [titre, setTitre] = useState("");
+  const [description, setDescription] = useState("");
+
+  const formulaireValide =
+    titre.trim().length > 0 && description.trim().length > 0;
+
   return (
     <section>
       <div className="container">
         <div className="section-head">
           <h2>Nouveau questionnaire</h2>
-          <p>Renseignez les informations du questionnaire.</p>
+          <p>Renseignez le titre et la description du questionnaire.</p>
         </div>
 
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div>
             <label htmlFor="titre">Titre</label>
             <input
               id="titre"
               name="titre"
               type="text"
+              value={titre}
+              onChange={(e) => setTitre(e.target.value)}
               placeholder="Titre du questionnaire"
+              required
             />
           </div>
 
@@ -26,15 +38,17 @@ export default function Creer() {
             <textarea
               id="description"
               name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder="Description du questionnaire"
-              rows={4}
+              required
             />
           </div>
 
           <button
-            type="button"
+            type="submit"
             className="btn btn-primary"
-            disabled
+            disabled={!formulaireValide}
           >
             Enregistrer
           </button>
